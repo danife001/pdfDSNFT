@@ -1,0 +1,101 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model List<pdfDSNFT.Models.DocumentoModel>
+@{
+    ViewData["Title"] = "Historial";
+}
+
+<a asp-action="Formulario" class="btn btn-primary mb-3">Nuevo Documento</a>
+<h2>Historial de Documentos</h2>
+
+<table class="table-responsive table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>PDF</th>
+            <th>Código</th>
+            <th>Version</th>
+            <th>Título</th>
+            <th>Mesa Sectorial</th>
+            <th>Fecha</th>
+            <th>Validación Inicial</th>
+            <th>Fecha Validación Inicial</th>
+            <th>Post Validación</th>
+            <th>Fecha Post Validación</th>
+            <th>Acciones</th>
+            <th>Ver PDF</th>
+            <th>Descargar PDF</th>
+            <th>Eliminar</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var doc in Model)
+        {
+            <tr>
+                <td>@doc.NombreArchivoPdf</td>
+                <td>@doc.Codigo</td>
+                <td>@doc.Version</td>
+                <td>@doc.Titulo</td>
+                <td>@doc.MesaSectorial</td>
+                <td>@doc.Fecha.Value.ToShortDateString()</td>
+                <td>@(doc.ValidacionInicial ? "Sí" : "No")</td>
+                <td>
+                    @(doc.FechaValidacionInicial.HasValue
+                                    ? doc.FechaValidacionInicial.Value.ToShortDateString()
+                                    : "")
+                </td>
+                <td>@(doc.PostValidacion ? "Sí" : "No")</td>
+                <td>
+                    @(doc.FechaPostValidacion.HasValue
+                                    ? doc.FechaPostValidacion.Value.ToShortDateString()
+                                    : "")
+                </td>
+                <td>
+                    <a asp-action="Editar" asp-route-id="@doc.Id" class="btn btn-warning btn-sm">Editar</a>
+                </td>
+                <td><a href="/pdfs/@doc.NombreArchivoPdf" target="_blank" class="btn btn-sm btn-success">Ver PDF</a></td>
+            <td>
+                <a href="/pdfs/@doc.NombreArchivoPdf"
+                   download
+                   class="btn btn-sm btn-primary">
+                    Descargar PDF
+                </a>
+            </td>
+                <td>
+                    <a asp-action="Eliminar" asp-route-id="@doc.Id" class="btn btn-danger btn-sm">Eliminar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<nav>
+    <ul class="pagination">
+
+        @if (ViewBag.Page > 1)
+        {
+            <li class="page-item">
+                <a class="page-link" asp-action="Historial" asp-route-page="@(ViewBag.Page - 1)">
+                    Anterior
+                </a>
+            </li>
+        }
+
+        @for (int i = 1; i <= ViewBag.TotalPages; i++)
+        {
+            <li class="page-item @(i == ViewBag.Page ? "active" : "")">
+                <a class="page-link" asp-action="Historial" asp-route-page="@i">@i</a>
+            </li>
+        }
+
+        @if (ViewBag.Page < ViewBag.TotalPages)
+        {
+            <li class="page-item">
+                <a class="page-link" asp-action="Historial" asp-route-page="@(ViewBag.Page + 1)">
+                    Siguiente
+                </a>
+            </li>
+        }
+
+    </ul>
+</nav>

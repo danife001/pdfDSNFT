@@ -1,0 +1,53 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model pdfDSNFT.Models.DocumentoModel
+
+
+<a asp-action="Historial" class="btn btn-secondary">Ver Historial</a>
+
+<h2>Editar Documento</h2>
+
+<form method="post" asp-action="Editar">
+    <input type="hidden" asp-for="Id" />
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="mb-3">
+        <label asp-for="Codigo" class="form-label"></label>
+        <input asp-for="Codigo" type="number" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Titulo" class="form-label"></label>
+        <input asp-for="Titulo" class="form-control" />
+        <span asp-validation-for="Titulo" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="MesaSectorial" class="form-label"></label>
+        <input asp-for="MesaSectorial" class="form-control" />
+        <span asp-validation-for="MesaSectorial" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Fecha" class="form-label"></label>
+        <input asp-for="Fecha" type="date" class="form-control" />
+        <span asp-validation-for="Fecha" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <div class="form-check">
+            <input asp-for="ValidacionInicial" class="form-check-input" />
+            <label asp-for="ValidacionInicial" class="form-check-label"></label>
+        </div>
+
+        <div class="form-check">
+            <input asp-for="PostValidacion" class="form-check-input" />
+            <label asp-for="PostValidacion" class="form-check-label"></label>
+        </div>
+    </div>
+
+    <button type="submit">Generar</button>
+
+</form>

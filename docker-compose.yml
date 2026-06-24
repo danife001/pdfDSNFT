@@ -1,0 +1,28 @@
+services:
+  app:
+    build: .
+    container_name: pdfdsnft_app
+    environment:
+      ConnectionStrings__DefaultConnection: "Server=sqlserver,1433;Database=pdfDSNFT;User Id=sa;Password=${SA_PASSWORD:?Set SA_PASSWORD in .env};TrustServerCertificate=True;"
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./pdfs:/app/wwwroot/pdfs
+    depends_on:
+      - sqlserver
+    restart: always
+
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: pdfdsnft_sql
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "${SA_PASSWORD:?Set SA_PASSWORD in .env}"
+    ports:
+      - "1433:1433"
+    volumes:
+      - sql_data:/var/opt/mssql
+    restart: always
+
+volumes:
+  sql_data:

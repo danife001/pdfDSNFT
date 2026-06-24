@@ -1,0 +1,16 @@
+bin/
+obj/
+.vs/
+
+*.user
+*.suo
+
+appsettings.Local.json
+.env
+
+pdfs/*
+!pdfs/.gitkeep
+wwwroot/pdfs/*
+!wwwroot/pdfs/.gitkeep
+
+*.log
